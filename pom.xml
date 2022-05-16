@@ -147,7 +147,8 @@
                     <dataFile>target/coverage-reports/jacoco-unit.exec</dataFile>
                     <includes>
                         <!--执行哪些路径下需要统计单元测试覆盖率-->
-                        <include>**/zjt/**</include>
+                        <!-- TODO 注意：这里一定要配置正确，否则可能统计出的覆盖率是0%-->
+                        <include>**/learn/**</include>
                         <!--<include>**/service/impl/*.class</include>-->
                     </includes>
                     <!-- rules里面指定覆盖规则 -->
@@ -194,7 +195,7 @@
                     <!--这个report:对代码进行检测，然后生成index.html在 target/site/index.html中可以查看检测的详细结果-->
                     <execution>
                         <id>jacoco-site</id>
-                        <phase>test</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
