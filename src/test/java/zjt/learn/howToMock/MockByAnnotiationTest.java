@@ -2,10 +2,10 @@ package zjt.learn.howToMock;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import zjt.learn.dto.MakeOrderDTO;
-import zjt.learn.service.IOrderService;
 import zjt.learn.service.impl.OrderServiceImpl;
 
 /**
@@ -30,6 +30,7 @@ public class MockByAnnotiationTest {
     public void testMock(){
         MakeOrderDTO result = orderService.query(1L);
         System.out.println(result);
+        Assertions.assertNull(result);
     }
 
 

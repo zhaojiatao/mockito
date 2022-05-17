@@ -6,9 +6,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import zjt.learn.dto.MakeOrderDTO;
-import zjt.learn.service.IOrderService;
 import zjt.learn.service.impl.OrderServiceImpl;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 
 /**
@@ -37,7 +38,7 @@ public class DeepMockTest {
         when( orderService.query(Mockito.anyLong())).thenReturn(makeOrderDTO);
         MakeOrderDTO result = orderService.query(1L);
         when(makeOrderDTO.getId()).thenReturn(1111L);
-        System.out.println(result.getId());
+        assertThat(result.getId(),equalTo(1111L));
 
     }
 }

@@ -28,7 +28,7 @@ public class SimpleService {
     }
 
     private String testPrivate(String params){
-        return "I am a private result";
+        return params+"I am a private result";
     }
 
 }

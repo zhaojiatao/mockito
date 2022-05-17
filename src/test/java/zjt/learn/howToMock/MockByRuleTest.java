@@ -2,6 +2,7 @@ package zjt.learn.howToMock;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import zjt.learn.service.IdGenerateService;
@@ -30,6 +31,7 @@ public class MockByRuleTest {
         IdGenerateService idGenerateService=mock(IdGenerateServiceImpl.class);
         Long generate = idGenerateService.generate();
         System.out.println(generate);
+        Assertions.assertEquals(0,generate);
     }
 
 }

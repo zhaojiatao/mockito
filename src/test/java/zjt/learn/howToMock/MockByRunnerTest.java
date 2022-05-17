@@ -1,6 +1,7 @@
 package zjt.learn.howToMock;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import zjt.learn.service.IdGenerateService;
@@ -25,6 +26,7 @@ public class MockByRunnerTest {
         IdGenerateService idGenerateService=mock(IdGenerateServiceImpl.class);
         Long generate = idGenerateService.generate();
         System.out.println(generate);
+        Assertions.assertEquals(0,generate);
     }
 
 

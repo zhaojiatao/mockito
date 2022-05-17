@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
  * @Date: 2022/5/15 21:45
  * @ClassName: DemoTest
  */
-public class DemoTest {
+class DemoTest {
 
     @InjectMocks
     @Spy
@@ -95,7 +95,7 @@ public class DemoTest {
      * 学习如何mock没有返回值的方法
      */
     @Test
-    public void test03(){
+    void test03(){
         {
             doNothing().when(orderDAO).save(Mockito.any());
             MakeOrderDTO makeOrderDTO = testService.makeOrder(MakeOrderDTO.builder()
