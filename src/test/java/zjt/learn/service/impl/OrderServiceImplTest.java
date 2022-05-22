@@ -8,7 +8,6 @@ import zjt.learn.dao.IOrderDAO;
 import zjt.learn.dto.MakeOrderDTO;
 import zjt.learn.service.IdGenerateService;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 /**
@@ -23,7 +22,7 @@ class OrderServiceImplTest {
 
     @InjectMocks
     @Spy
-    private OrderServiceImpl testService;
+    private OrderServiceImpl orderService;
 
     @Mock
     private IdGenerateService idGenerateService;
@@ -40,7 +39,7 @@ class OrderServiceImplTest {
     @Test
     void makeOrder() {
         try{
-            testService.makeOrder(null);
+            orderService.makeOrder(null);
             Assertions.fail("这里会挂掉");
         }catch (Exception e){
             Assertions.assertTrue(e instanceof RuntimeException);
@@ -82,7 +81,7 @@ class OrderServiceImplTest {
             when(idGenerateService.generate()).thenThrow(new RuntimeException("自定义异常"));
             try{
                 MakeOrderDTO makeOrderDTO=new MakeOrderDTO();
-                testService.makeOrder(makeOrderDTO);
+                orderService.makeOrder(makeOrderDTO);
                 Assertions.fail("这里会挂掉");
             }catch (Exception e){
                 System.out.println(e.getMessage());

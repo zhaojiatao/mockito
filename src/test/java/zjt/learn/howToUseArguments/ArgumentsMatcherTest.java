@@ -37,6 +37,7 @@ public class ArgumentsMatcherTest {
     public void testComplex(){
         Foo foo = mock(Foo.class);
         {
+            //Child1和Child2 都是Parent的子类
             when(foo.function(Mockito.isA(Parent.class))).thenReturn(100);
             int result = foo.function(new Child1());
             assertThat(result,equalTo(100));
@@ -50,7 +51,7 @@ public class ArgumentsMatcherTest {
             int result = foo.function(new Child1());
             assertThat(result,equalTo(100));
             int result2 = foo.function(new Child2());
-            assertThat(result2,equalTo(0));
+            assertThat(result2,equalTo(0));//Child2不是Child1子类，故走默认返回值0
             reset(foo);
         }
 

@@ -14,6 +14,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * 功能：
+ * Spy是有使用场景的，当我们需要mock一部分方法，而另外的方法需要正常执行时就需要用到Spy了
  * 被spy的对象,除了被stubbing的逻辑之外,都默认走真实方法
  * @Author: zhaojiatao
  * @Date: 2022/5/16 14:05

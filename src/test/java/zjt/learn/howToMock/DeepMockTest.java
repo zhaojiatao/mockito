@@ -2,9 +2,10 @@ package zjt.learn.howToMock;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import zjt.learn.dto.MakeOrderDTO;
 import zjt.learn.service.impl.OrderServiceImpl;
 
@@ -19,6 +20,7 @@ import static org.mockito.Mockito.when;
  * @Date: 2022/5/16 13:24
  * @ClassName: DeepMockTest02
  */
+@RunWith(MockitoJUnitRunner.class)
 public class DeepMockTest {
 
     @Mock
@@ -30,7 +32,7 @@ public class DeepMockTest {
 
     @Before
     public void init(){
-        MockitoAnnotations.openMocks(this);
+//        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -39,6 +41,5 @@ public class DeepMockTest {
         MakeOrderDTO result = orderService.query(1L);
         when(makeOrderDTO.getId()).thenReturn(1111L);
         assertThat(result.getId(),equalTo(1111L));
-
     }
 }

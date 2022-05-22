@@ -10,4 +10,7 @@ public interface IdGenerateService {
      */
     Long generate();
 
+
+    Long generateV2(Long param);
+
 }

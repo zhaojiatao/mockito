@@ -21,4 +21,9 @@ public class IdGenerateServiceImpl implements IdGenerateService {
         log.info("真正调用generate");
         return UUID.randomUUID().getMostSignificantBits();
     }
+
+    @Override
+    public Long generateV2(Long param) {
+        return param+1;
+    }
 }

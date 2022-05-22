@@ -1,12 +1,18 @@
 package zjt.learn.service.impl;
 
 
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
 import zjt.learn.dao.IOrderDAO;
 import zjt.learn.dto.MakeOrderDTO;
+import zjt.learn.service.IOrderService;
 import zjt.learn.service.IUserAdapter;
 import zjt.learn.service.IdGenerateService;
 
@@ -19,11 +25,8 @@ import static org.mockito.Mockito.*;
  * @Date: 2022/5/15 21:45
  * @ClassName: DemoTest
  */
-class DemoTest {
-
-    @InjectMocks
-    @Spy
-    private OrderServiceImpl testService;
+@RunWith(MockitoJUnitRunner.class)
+public class DemoTest {
 
     @Mock
     private IdGenerateService idGenerateService;
@@ -34,17 +37,21 @@ class DemoTest {
     @Mock
     private IOrderDAO orderDAO;
 
+    @InjectMocks
+    @Spy
+    private IOrderService testService=new OrderServiceImpl();
+
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         //mock 注解需要搭配 MockitoAnnotations.openMocks(testClass) 方法一起使用。
-        MockitoAnnotations.openMocks(this);
+//        MockitoAnnotations.openMocks(this);
     }
 
     /**
      * 真实调用testService 并传入null参数
      */
     @Test
-    void test01(){
+    public void test01(){
         try{
             testService.makeOrder(null);
             Assertions.fail("下单参数不可为null");
@@ -61,7 +68,7 @@ class DemoTest {
     * 3、抛异常
     */
     @Test
-    void test02(){
+    public void test02(){
 
 
         {
@@ -95,7 +102,7 @@ class DemoTest {
      * 学习如何mock没有返回值的方法
      */
     @Test
-    void test03(){
+    public void test03(){
         {
             doNothing().when(orderDAO).save(Mockito.any());
             MakeOrderDTO makeOrderDTO = testService.makeOrder(MakeOrderDTO.builder()

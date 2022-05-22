@@ -4,7 +4,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import zjt.learn.service.IdGenerateService;
 import zjt.learn.service.impl.StubbingService;
 
 import java.util.ArrayList;
@@ -28,6 +31,9 @@ public class StubbingTest {
 
     private List<String> list;
 
+    @Mock
+    private IdGenerateService idGenerateService;
+
     @Before
     public void init(){
         this.list=mock(ArrayList.class);
@@ -35,6 +41,7 @@ public class StubbingTest {
 
     @Test
     public void howToUseStubbing(){
+        System.out.println(list.toString());
         when(list.get(0)).thenReturn("first");
         assertThat(list.get(0),equalTo("first"));
 
@@ -46,6 +53,24 @@ public class StubbingTest {
         }catch (Exception e){
             assertThat(e,instanceOf(RuntimeException.class));
         }
+
+
+        System.out.println(idGenerateService.generateV2(1L));
+        when(idGenerateService.generateV2(1L)).thenReturn(10L);
+        assertThat(idGenerateService.generateV2(1L),equalTo(10L));
+
+        when(idGenerateService.generateV2(anyLong())).thenThrow(new RuntimeException("dddd"));
+        try{
+            idGenerateService.generateV2(1L);
+            fail();
+        }catch (Exception e){
+            assertThat(e,instanceOf(RuntimeException.class));
+        }
+
+        Mockito.reset(idGenerateService);
+        when(idGenerateService.generateV2(2L)).thenReturn(20L);
+        assertThat(idGenerateService.generateV2(2L),equalTo(20L));
+
     }
 
 

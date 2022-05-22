@@ -322,6 +322,7 @@ public class StubbingTest {
 # 三、如何使用spy
 
 > 被spy的对象,除了被stubbing的逻辑之外,都默认走真实方法.
+> Spy是有使用场景的，当我们需要mock一部分方法，而另外的方法需要正常执行时就需要用到Spy了
 
 ```java
 package zjt.learn.howToSpy;

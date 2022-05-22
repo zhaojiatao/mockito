@@ -3,8 +3,11 @@ package zjt.learn.howToMock;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import zjt.learn.dto.MakeOrderDTO;
+import zjt.learn.service.IOrderService;
 import zjt.learn.service.IdGenerateService;
 import zjt.learn.service.impl.IdGenerateServiceImpl;
 
@@ -20,10 +23,13 @@ import static org.mockito.Mockito.mock;
 public class MockByRuleTest {
 
     /**
-     * 使用Rule的方式，这种一般比较少见，一般使用注解方式
+     * 当想使用其他runner时，可以使用rule模式
      */
     @Rule
     public MockitoRule mockitoRule= MockitoJUnit.rule();
+
+    @Mock
+    private IOrderService orderService;
 
     @Test
     public void testMock(){
@@ -32,6 +38,14 @@ public class MockByRuleTest {
         Long generate = idGenerateService.generate();
         System.out.println(generate);
         Assertions.assertEquals(0,generate);
+    }
+
+
+    @Test
+    public void testMock2(){
+        MakeOrderDTO result = orderService.query(1L);
+        System.out.println(result);
+        Assertions.assertNull(result);
     }
 
 }
