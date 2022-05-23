@@ -875,3 +875,133 @@ public class MockStaticMethodTest {
 ![1652717826953](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1652717826953.png)
 
 ![1652717854417](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1652717854417.png)
+
+
+
+# 九、集成Spring，并融合mockito
+
+## 9.1 集成spring
+
+```java
+package zjt.learn.springtest;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import zjt.learn.MockitoApplication;
+
+/**
+ * 功能：
+ *
+ * @Author: zhaojiatao
+ * @Date: 2022/5/23 14:35
+ * @ClassName: BaseTest
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = MockitoApplication.class)
+public class BaseTest {
+    @Test
+    public void testBase() {
+        Assert.assertTrue(true);
+    }
+}
+
+```
+
+## 9.2spring融合mockito
+
+> 例如：在orderService springbean对象中，想mock掉IOrderDAO，则通过如下方式。
+
+```java
+package zjt.learn.springtest;
+
+import com.alibaba.fastjson.JSON;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import zjt.learn.dao.IOrderDAO;
+import zjt.learn.dto.MakeOrderDTO;
+import zjt.learn.service.IOrderService;
+
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+/**
+ * 功能：
+ *
+ * @Author: zhaojiatao
+ * @Date: 2022/5/23 14:35
+ * @ClassName: OrderServiceTest
+ */
+public class OrderServiceTest extends BaseTest{
+
+
+    @Autowired
+    private IOrderService orderService;
+
+    /**
+     * @MockBean 注解将Mock对象添加到Spring上下文中。
+     * 注解的对象将替换Spring上下文中任何相同类型的现有bean，如果没有定义相同类型的bean，将添加一个新的bean。
+     */
+    @MockBean
+    private IOrderDAO orderDAO;
+
+
+    @Before
+    public void init(){
+        //如果使用@RunWith(MockitoJUnitRunner.class)，则此处无需初始化注解扫描
+        MockitoAnnotations.openMocks(this);
+    }
+
+
+    @Test
+    public void queryTest(){
+        MakeOrderDTO query = orderService.query(1L);
+        System.out.println(JSON.toJSONString(query));
+    }
+
+
+
+
+    @Test
+    public void queryTest2(){
+        when(orderDAO.loadFromDB(anyLong())).thenReturn(MakeOrderDTO.builder().id(11111L).build());
+        MakeOrderDTO query = orderService.query(1L);
+        System.out.println(JSON.toJSONString(query));
+    }
+
+
+}
+
+```
+
+# 十、maven 打包测试跳过spring集成测试代码
+
+```xml
+<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <excludes>
+                        <!--排除springboot集成测试,integrationtest为举例，打比方integrationtest目录下都是集成测试代码-->
+                        <exclude>**/springtest/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+```
+
+
+
+
+

@@ -133,7 +133,7 @@
                 <configuration>
                     <excludes>
                         <!--排除springboot集成测试,integrationtest为举例，打比方integrationtest目录下都是集成测试代码-->
-                        <exclude>**/integrationtest/**</exclude>
+                        <exclude>**/springtest/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
